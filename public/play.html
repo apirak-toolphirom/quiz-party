@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#7b2ff7">
+<title>Quiz Party — เข้าเล่น</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bubbles"><span></span><span></span><span></span><span></span><span></span></div>
+<main class="play">
+  <div class="phead">
+    <span id="hName">🎉 Quiz Party</span>
+    <span id="hInfo"></span>
+    <span id="hScore"></span>
+  </div>
+  <div class="pbody" id="pbody">
+
+    <!-- เข้าร่วม -->
+    <div id="v-join" class="view active">
+      <div class="joinbox">
+        <div class="center logo" style="font-size:44px">🎉 Quiz <b>Party</b></div>
+        <div class="card" style="display:flex;flex-direction:column;gap:12px">
+          <input id="inPin" inputmode="numeric" maxlength="6" placeholder="PIN เกม" autocomplete="off">
+          <input id="inName" maxlength="20" placeholder="ตั้งชื่อเล่นของคุณ" autocomplete="off">
+          <div class="muted center">เลือกตัวละคร</div>
+          <div class="avpick" id="avpick"></div>
+          <button class="btn pink big" id="btnJoin" style="justify-content:center">เข้าร่วม! 🚀</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="v-msg" class="view"></div>
+  </div>
+</main>
+<script src="/socket.io/socket.io.js"></script>
+<script src="common.js"></script>
+<script src="play.js"></script>
+</body>
+</html>

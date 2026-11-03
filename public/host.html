@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz Party — ผู้จัดเกม</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bubbles"><span></span><span></span><span></span><span></span><span></span></div>
+<main>
+
+  <!-- คลังแบบทดสอบ -->
+  <section id="v-home" class="view active">
+    <div class="topbar">
+      <a href="/" class="logo" style="text-decoration:none">🎉 Quiz <b>Party</b></a>
+      <span class="grow"></span>
+      <label class="btn ghost">📥 นำเข้า JSON<input type="file" id="importFile" accept=".json,application/json" hidden></label>
+      <button class="btn yellow big" id="btnNew">＋ สร้างแบบทดสอบ</button>
+    </div>
+    <div class="wrap">
+      <div id="quizList" class="quizgrid"></div>
+    </div>
+  </section>
+
+  <!-- แก้ไขแบบทดสอบ -->
+  <section id="v-editor" class="view">
+    <div class="topbar">
+      <button class="btn ghost" id="btnBack">← กลับ</button>
+      <span class="grow"></span>
+      <button class="btn ghost" id="btnExport">📤 ส่งออก JSON</button>
+      <button class="btn green" id="btnSave">💾 บันทึก</button>
+      <button class="btn pink" id="btnPlayFromEdit">▶ เล่นเลย</button>
+    </div>
+    <div class="wrap">
+      <div class="card" style="margin-bottom:16px">
+        <input id="qTitle" placeholder="ชื่อแบบทดสอบ" style="font-size:24px;font-weight:600">
+        <textarea id="qDesc" rows="2" placeholder="คำอธิบาย (ไม่ใส่ก็ได้)" style="margin-top:10px"></textarea>
+      </div>
+      <div id="qList"></div>
+      <div class="center"><button class="btn yellow big" id="btnAddQ">＋ เพิ่มคำถาม</button></div>
+      <p class="sub center" style="margin-top:14px">เลือกวงกลมหน้าคำตอบที่ถูก • ภาพ jpg/png/gif/webp • เสียง mp3/m4a/wav/ogg หรืออัดจากไมค์ (ขนาดไม่เกิน 25MB)</p>
+    </div>
+  </section>
+
+  <!-- ตั้งค่าเกม -->
+  <section id="v-setup" class="view">
+    <div class="topbar">
+      <button class="btn ghost" data-go="home">← กลับ</button>
+    </div>
+    <div class="wrap">
+      <div class="card">
+        <h2 id="setupTitle">ตั้งค่าเกม</h2>
+        <p class="muted" id="setupInfo"></p>
+        <div class="settings">
+          <div class="setting">
+            <h4>📝 จำนวนข้อที่ใช้เล่น</h4>
+            <input type="number" id="sCount" min="1" value="10">
+            <label class="chk" style="margin-top:8px"><input type="checkbox" id="sShuffle"> สุ่มลำดับ / สุ่มเลือกข้อ</label>
+          </div>
+          <div class="setting">
+            <h4>🐢 โหมดรอเพื่อน</h4>
+            <label class="chk"><input type="checkbox" id="sWait" checked> เปิดใช้งาน</label>
+            <div class="row" style="margin-top:8px">
+              ตอบถูก+เร็ว ติดกัน <input type="number" id="sWaitStreak" min="2" max="10" value="3" style="width:70px"> ข้อ
+            </div>
+            <div class="row" style="margin-top:6px">
+              หัก <input type="number" id="sWaitPenalty" min="0" max="1000" step="10" value="100" style="width:90px"> คะแนน
+            </div>
+          </div>
+          <div class="setting">
+            <h4>⚡ นับว่า "ตอบเร็ว" เมื่อ</h4>
+            <div class="row">ตอบภายใน <input type="number" id="sFast" min="10" max="100" step="5" value="50" style="width:80px"> % ของเวลา</div>
+            <p class="muted" style="font-size:14px;margin:6px 0 0">คะแนนตอบถูก 500–1,000 ยิ่งเร็วยิ่งได้มาก ข้อ x2 ได้คะแนนสองเท่า</p>
+          </div>
+          <div class="setting">
+            <h4>📱 หน้าจอผู้เล่น</h4>
+            <label class="chk"><input type="checkbox" id="sShow" checked> แสดงคำถาม/ภาพ/ตัวเลือกบนมือถือด้วย</label>
+            <label class="chk" style="margin-top:6px"><input type="checkbox" id="sLate" checked> ให้เข้าร่วมระหว่างเกมได้</label>
+          </div>
+        </div>
+        <div class="center" style="margin-top:18px">
+          <button class="btn pink big" id="btnCreateRoom">🚀 สร้างห้องเกม</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ล็อบบี้ -->
+  <section id="v-lobby" class="view">
+    <div class="wrap">
+      <div class="lobby">
+        <div class="card center qrbox">
+          <div class="muted">สแกนเพื่อเข้าเล่น</div>
+          <img id="qrImg" alt="QR code สำหรับเข้าเล่น">
+          <div class="muted" style="margin-top:10px">หรือใส่ PIN</div>
+          <div class="pin" id="lobbyPin">------</div>
+          <div class="joinurl" id="joinUrl"></div>
+          <div class="row" style="justify-content:center;margin-top:10px">
+            <button class="btn sm ghost" id="btnCopy">📋 คัดลอกลิงก์</button>
+            <button class="btn sm ghost" id="btnMusic">🎵 เพลง</button>
+          </div>
+        </div>
+        <div>
+          <div class="row" style="color:#fff">
+            <h1 class="grow" id="lobbyTitle" style="text-shadow:0 4px 0 rgba(0,0,0,.18)"></h1>
+            <span class="count-badge" id="lobbyCount">0 คน</span>
+          </div>
+          <p class="sub" id="lobbyRule"></p>
+          <div class="players" id="lobbyPlayers"></div>
+          <p class="sub" id="lobbyEmpty" style="font-size:22px">⏳ รอผู้เล่นเข้าห้อง...</p>
+          <div style="margin-top:20px" class="row">
+            <button class="btn yellow big" id="btnStart" disabled>▶ เริ่มเกม</button>
+            <span class="sub" style="font-size:14px">แตะชื่อเพื่อเตะออก</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- จอเกม -->
+  <section id="v-stage" class="view">
+    <div class="stage" id="stage"></div>
+  </section>
+
+</main>
+<script src="/socket.io/socket.io.js"></script>
+<script src="common.js"></script>
+<script src="host.js"></script>
+</body>
+</html>
