@@ -1,0 +1,16 @@
+{
+  "name": "Quiz Party",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": { "label": "Quiz Party", "onAutoForward": "openBrowser" }
+  },
+  "postCreateCommand": "npm install",
+  "postStartCommand": "bash .devcontainer/start.sh",
+  "customizations": {
+    "codespaces": { "openFiles": ["README.md"] }
+  }
+}

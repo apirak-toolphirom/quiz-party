@@ -13,7 +13,10 @@ const multer = require('multer');
 const QRCode = require('qrcode');
 
 const PORT = process.env.PORT || 3000;
-const PUBLIC_URL = (process.env.PUBLIC_URL || '').replace(/\/$/, '');
+// บน GitHub Codespaces จะสร้างลิงก์สาธารณะให้อัตโนมัติ
+const CODESPACE_URL = process.env.CODESPACE_NAME && process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN
+  ? `https://${process.env.CODESPACE_NAME}-${process.env.PORT || 3000}.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}` : '';
+const PUBLIC_URL = (process.env.PUBLIC_URL || CODESPACE_URL).replace(/\/$/, '');
 const HOST_KEY = process.env.HOST_KEY || '';
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const QUIZ_DIR = path.join(DATA_DIR, 'quizzes');

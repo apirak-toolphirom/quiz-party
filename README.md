@@ -19,6 +19,19 @@
 
 ## ติดตั้ง
 
+### ▶ รันบน GitHub (Codespaces) — ไม่ต้องมีเครื่องเซิร์ฟเวอร์
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/apirak-toolphirom/quiz-party?quickstart=1)
+
+1. กดปุ่มด้านบน → **Create codespace** (รอประมาณ 1–2 นาทีครั้งแรก)
+2. เซิร์ฟเวอร์เปิดเองอัตโนมัติ ดูลิงก์ได้ในแท็บ **PORTS** (พอร์ต 3000) แล้วเติม `/host.html` ท้ายลิงก์
+3. พอร์ตถูกตั้งเป็น **Public** ให้อัตโนมัติ ถ้ามือถือเข้าไม่ได้: แท็บ PORTS → คลิกขวาพอร์ต 3000 → Port Visibility → **Public**
+4. QR code ในล็อบบี้จะใช้ลิงก์ Codespaces ให้เองโดยไม่ต้องตั้ง `PUBLIC_URL`
+
+> Codespaces ฟรี 60 ชั่วโมง/เดือน (บัญชีส่วนตัว) และหยุดเองเมื่อไม่ใช้งาน ~30 นาที — ระหว่างเกมให้เปิดแท็บ Codespace ทิ้งไว้
+> ถ้า Codespace ถูกหยุดแล้วเปิดใหม่ ลิงก์เดิมจะใช้ได้เหมือนเดิม และแบบทดสอบ/ไฟล์ที่อัปโหลดยังอยู่ (จนกว่าจะลบ Codespace — ควรกด 📤 ส่งออก JSON สำรองไว้)
+> ถ้าเซิร์ฟเวอร์ไม่ทำงาน เปิด Terminal แล้วพิมพ์ `bash .devcontainer/start.sh`
+
 ### Node.js (18 ขึ้นไป)
 ```bash
 git clone https://github.com/apirak-toolphirom/quiz-party.git
